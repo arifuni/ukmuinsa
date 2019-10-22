@@ -30,14 +30,16 @@ class Login extends CI_Controller {
 	}
 	public function login_submit(){
 
-	 	$logged = $this->chat_model->login();
+          $username=$this->input->post('niknim');
+          $password=$this->input->post('password');
 
-        if( $logged == 1 ){
-            redirect('welcome');
+          $data = file_get_contents('http://eis.uinsby.ac.id/eis/login/'.$username.'/'.$password);
+          $a=explode('"',$data);
+          if(empty($a[3])){$a[3]="a";}
+          if ($a[3]==$username){redirect('welcome');}
+          else{redirect('');}
 
-        }else{
-            redirect('');
-        }
+
 	}
 
 }
